@@ -21,9 +21,6 @@ for i in range():
             diag=table[i+2-1][j+2-1]-1
         table[i+2][j+2]=max(topv,leftv,diag)
 
-
-
-
 ali=[[8,8,[[],[]]]]
 
 def align(ali):
