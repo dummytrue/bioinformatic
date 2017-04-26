@@ -1,5 +1,5 @@
-top="��J�ǦC"
-left="��J�ǦC"
+top="¿é¤J§Ç¦C"
+left="¿é¤J§Ç¦C"
 
 table=[[0 for j in range()] for i in range()]
 table[0][2:] = top
@@ -32,7 +32,7 @@ ali=[[8,8,[[],[]]]]
 def align(ali):
     new=[]
     def align1():
-        if table[j-1][k-1] and table[j][k]==table[j-1][k-1]+1:
+        if type(table[j-1][k-1]) == int and table[j][k]==table[j-1][k-1]+1:
             aA=[table[0][k]]+alignA
             aB=[table[j][0]]+alignB
             j1=j-1
@@ -41,7 +41,7 @@ def align(ali):
             new.append(ns)
             print("a1",new)
     def align2():
-        if table[j-1][k-1] and table[j][k]==table[j-1][k-1]-1:
+        if table[j-1][k-1] == int and table[j][k]==table[j-1][k-1]-1:
             aA=[table[0][k]]+alignA
             aB=[table[j][0]]+alignB
             j1=j-1
@@ -50,7 +50,7 @@ def align(ali):
             new.append(ns)
             print("a2",new)
     def align3():
-        if table[j-1][k] and table[j][k]==table[j-1][k]-1:
+        if table[j-1][k] == int and table[j][k]==table[j-1][k]-1:
             aA=["-"]+alignA
             aB=[table[j][0]]+alignB
             j1=j-1
@@ -59,7 +59,7 @@ def align(ali):
             new.append(ns)
             print("a3",new)
     def align4():
-        if table[j][k-1] and table[j][k]==table[j][k-1]-1:
+        if table[j][k-1] == int and table[j][k]==table[j][k-1]-1:
             aA=[table[0][k]]+alignA
             aB=["-"]+alignB
             j1=j
@@ -81,7 +81,7 @@ def align(ali):
 
     def check(new):
         for i in new:
-            if i[0]!=1 and i[1]!=1:
+            if i[0]>1 and i[1]>1:
                 return True
                 break
 
