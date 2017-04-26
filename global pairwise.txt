@@ -25,28 +25,66 @@ for i in range():
         table[i+2][j+2]=max(topv,leftv,diag)
 
 
-i=0
-j=0
-alignA=""
-alignB=""
-while i<7 or j <7:
-    if  i<7 and j <7 and table[i+2][j+2]==table[i+2-1][j+2-1]-1:
-        alignA+=table[0][j+2]
-        alignB+=table[i+2][0]
-        i+=1
-        j+=1
-    elif i<7 and j<7 and table[i+2][j+2]==table[i+2-1][j+2-1]+1:
-        alignA+=table[0][j+2]
-        alignB+=table[i+2][0]
-        i+=1
-        j+=1
-    elif i<7 and table[i+2][j+2]==table[i+2-1][j+2]-1:
-        alignA+=table[0][j+2]
-        alignB+="-"
-        i+=1
-    elif i<7 and table[i+2][j+2]==table[i+2][j+2-1]-1:
-        alignA+="-"
-        alignB+=table[i+2][0]
-        j+=1
-    else:
-        j+=1
+
+
+ali=[[8,8,[[],[]]]]
+
+def align(ali):
+    new=[]
+    def align1():
+        if table[j-1][k-1] and table[j][k]==table[j-1][k-1]+1:
+            aA=[table[0][k]]+alignA
+            aB=[table[j][0]]+alignB
+            j1=j-1
+            k1=k-1
+            ns=[j1,k1,[aA,aB]]
+            new.append(ns)
+            print("a1",new)
+    def align2():
+        if table[j-1][k-1] and table[j][k]==table[j-1][k-1]-1:
+            aA=[table[0][k]]+alignA
+            aB=[table[j][0]]+alignB
+            j1=j-1
+            k1=k-1
+            ns=[j1,k1,[aA,aB]]
+            new.append(ns)
+            print("a2",new)
+    def align3():
+        if table[j-1][k] and table[j][k]==table[j-1][k]-1:
+            aA=["-"]+alignA
+            aB=[table[j][0]]+alignB
+            j1=j-1
+            k1=k
+            ns=[j1,k1,[aA,aB]]
+            new.append(ns)
+            print("a3",new)
+    def align4():
+        if table[j][k-1] and table[j][k]==table[j][k-1]-1:
+            aA=[table[0][k]]+alignA
+            aB=["-"]+alignB
+            j1=j
+            k1=k-1
+            ns=[j1,k1,[aA,aB]]
+            new.append(ns)
+            print("a4",new)
+
+    for i in ali:
+        j=i[0]
+        k=i[1]
+        alignA=i[2][0]
+        alignB=i[2][1]
+        print(j,k)
+        align1()
+        align2()
+        align3()
+        align4()
+
+    def check(new):
+        for i in new:
+            if i[0]!=1 and i[1]!=1:
+                return True
+                break
+
+    if check(new)==True:
+        align(new)
+    return new
