@@ -20,7 +20,7 @@ for i in range():
         else:
             diag=table[i+2-1][j+2-1]-1
         table[i+2][j+2]=max(topv,leftv,diag)
-
+table[0][0],table[1][0],table[0][1]="i","i","i"
 ali=[[8,8,[[],[]]]]
 
 def align(ali):
@@ -35,7 +35,7 @@ def align(ali):
             new.append(ns)
             print("a1",new)
     def align2():
-        if table[j-1][k-1] == int and table[j][k]==table[j-1][k-1]-1:
+        if type(table[j-1][k-1]) == int and table[j][k]==table[j-1][k-1]-1:
             aA=[table[0][k]]+alignA
             aB=[table[j][0]]+alignB
             j1=j-1
@@ -44,7 +44,7 @@ def align(ali):
             new.append(ns)
             print("a2",new)
     def align3():
-        if table[j-1][k] == int and table[j][k]==table[j-1][k]-1:
+        if type(table[j-1][k]) == int and table[j][k]==table[j-1][k]-1:
             aA=["-"]+alignA
             aB=[table[j][0]]+alignB
             j1=j-1
@@ -53,7 +53,7 @@ def align(ali):
             new.append(ns)
             print("a3",new)
     def align4():
-        if table[j][k-1] == int and table[j][k]==table[j][k-1]-1:
+        if type(table[j][k-1]) == int and table[j][k]==table[j][k-1]-1:
             aA=[table[0][k]]+alignA
             aB=["-"]+alignB
             j1=j
