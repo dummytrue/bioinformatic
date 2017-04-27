@@ -1,91 +1,86 @@
- top = "GCATGCU"
- left = "GATTACA"
- table=[[0 for j in range(9)] for i in range(9)]
- table[0][2:] = top
+top = "GCATGCU"
+left = "GATTACA"
+table=[[0 for j in range(9)] for i in range(9)]
+table[0][2:] = top
  
- for i in range(7):
+for i in range(7):
      table[i+2][0]=left[i]
  
- for i in range(7):
+for i in range(7):
      table[1][i+2]=-i-1
  
- for i in range(7):
+for i in range(7):
      table[i+2][1]=-i-1
  
  
- for i in range(7):
+for i in range(7):
      for j in range(7):
          topv=table[i+2-1][j+2]-1
          leftv=table[i+2][j+2-1]-1
          if table[i+2][0] == table[0][j+2]:
              diag=table[i+2-1][j+2-1]+1
-          else:
+         else:
               diag=table[i+2-1][j+2-1]-1
-          table[i+2][j+2]=max(topv,leftv,diag)
- table[0][0],table[1][0],table[0][1]="i","i","i"
+         table[i+2][j+2]=max(topv,leftv,diag)
+table[0][0],table[1][0],table[0][1]="i","i","i"
  
- ali=[[8,8,[[],[]]]]
+ali=[[8,8,[[],[]]]]
  
- def align(ali):
-     new=[]
-     def check(ali):
-         for i in ali:
-             if i[0]>1 and i[1]>1:
-                 return True
-                 break
+def align(ali):
+    new=[]
+    def check(ali):
+        for i in ali:
+            if i[0]>1 and i[1]>1:
+                return True
+                break
 
-     #print("i",new)
-     def align1():
-         if type(table[j-1][k-1]) == int and table[j][k]==table[j-1][k-
- 1]+1:
-             aA=[table[0][k]]+alignA
-             aB=[table[j][0]]+alignB
-             j1=j-1
-             k1=k-1
-             ns=[j1,k1,[aA,aB]]
-             new.append(ns)
-             #print("a1",new)
-     def align2():
-         if type(table[j-1][k-1]) == int and table[j][k]==table[j-1][k-
- 1]-1:
-             aA=[table[0][k]]+alignA
-             aB=[table[j][0]]+alignB
-             j1=j-1
-             k1=k-1
-             ns=[j1,k1,[aA,aB]]
-             new.append(ns)
-             #print("a2",new)
-     def align3():
-         if type(table[j-1][k]) == int and table[j][k]==table[j-1][k]-1
- :
-             aA=["-"]+alignA
-             aB=[table[j][0]]+alignB
-             j1=j-1
-             k1=k
-             ns=[j1,k1,[aA,aB]]
-             new.append(ns)
-             #print("a3",new)
-     def align4():
-         if type(table[j][k-1]) == int and table[j][k]==table[j][k-1]-1
- :
-             aA=[table[0][k]]+alignA
-             aB=["-"]+alignB
-             j1=j
-             k1=k-1
-             ns=[j1,k1,[aA,aB]]
-             new.append(ns)
-             #print("a4",new)
+    #print("i",new)
+    def align1():
+        if type(table[j-1][k-1]) == int and table[j][k]==table[j-1][k-1]+1:
+            aA=[table[0][k]]+alignA
+            aB=[table[j][0]]+alignB
+            j1=j-1
+            k1=k-1
+            ns=[j1,k1,[aA,aB]]
+            new.append(ns)
+  
+    def align2():
+        if type(table[j-1][k-1]) == int and table[j][k]==table[j-1][k-1]-1:
+            aA=[table[0][k]]+alignA
+            aB=[table[j][0]]+alignB
+            j1=j-1
+            k1=k-1
+            ns=[j1,k1,[aA,aB]]
+            new.append(ns)
+ 
+    def align3():
+        if type(table[j-1][k]) == int and table[j][k]==table[j-1][k]-1:
+            aA=["-"]+alignA
+            aB=[table[j][0]]+alignB
+            j1=j-1
+            k1=k
+            ns=[j1,k1,[aA,aB]]
+            new.append(ns)
 
-     for i in ali:
-         j,k,alignA,alignB = i[0],i[1],i[2][0],i[2][1]
-         #print(j,k)
-         align1()
-         align2()
-         align3()
-         align4()
-     if check(new) == True:
-         align(new)
-     else:
-         answer = list(new)
-         return answer
- align(ali)
+    def align4():
+        if type(table[j][k-1]) == int and table[j][k]==table[j][k-1]-1:
+            aA=[table[0][k]]+alignA
+            aB=["-"]+alignB
+            j1=j
+            k1=k-1
+            ns=[j1,k1,[aA,aB]]
+            new.append(ns)
+ 
+
+    for i in ali:
+        j,k,alignA,alignB = i[0],i[1],i[2][0],i[2][1]
+        align1()
+        align2()
+        align3()
+        align4()
+    if check(new) == True:
+        return align(new)
+    else:
+        return new
+
+align(ali)
