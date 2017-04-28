@@ -1,31 +1,30 @@
-top = "GCATGCU"
+top = "GCATGCT"
 left = "GATTACA"
 table=[[0 for j in range(9)] for i in range(9)]
 table[0][2:] = top
- 
+
 for i in range(7):
      table[i+2][0]=left[i]
- 
+
 for i in range(7):
      table[1][i+2]=-i-1
- 
+
 for i in range(7):
      table[i+2][1]=-i-1
- 
- 
+
+simdict={"AA":10,"GG":7,"CC":9,"TT":8,"GA":-1,"CA":-3,"TA":-4,"CG":-5,"TG":-3,"TC":0,"AG":-1,"AC":-3,"AT":-4,"GC":-5,"GT":-3,"CT":0}
+
 for i in range(7):
      for j in range(7):
-         topv=table[i+2-1][j+2]-1
-         leftv=table[i+2][j+2-1]-1
-         if table[i+2][0] == table[0][j+2]:
-             diag=table[i+2-1][j+2-1]+1
-         else:
-              diag=table[i+2-1][j+2-1]-1
+         topv=table[i+2-1][j+2]-5
+         leftv=table[i+2][j+2-1]-5
+         diag=table[i+2-1][j+2-1]+simdict.get(table[0][j+2]+table[i+2][0])
          table[i+2][j+2]=max(topv,leftv,diag)
+
 table[0][0],table[1][0],table[0][1]="i","i","i"
- 
+
 ali=[[8,8,[[],[]]]]
- 
+
 def align(ali):
     new=[]
     def check(ali):
@@ -36,25 +35,17 @@ def align(ali):
 
     #print("i",new)
     def align1():
-        if type(table[j-1][k-1]) == int and table[j][k]==table[j-1][k-1]+1:
+        if type(table[j-1][k-1]) == int and table[j][k]==table[j-1][k-1]+simdict.get(table[0][k]+table[j][0]):
             aA=[table[0][k]]+alignA
             aB=[table[j][0]]+alignB
             j1=j-1
             k1=k-1
             ns=[j1,k1,[aA,aB]]
             new.append(ns)
-  
-    def align2():
-        if type(table[j-1][k-1]) == int and table[j][k]==table[j-1][k-1]-1:
-            aA=[table[0][k]]+alignA
-            aB=[table[j][0]]+alignB
-            j1=j-1
-            k1=k-1
-            ns=[j1,k1,[aA,aB]]
-            new.append(ns)
- 
+
     def align3():
-        if type(table[j-1][k]) == int and table[j][k]==table[j-1][k]-1:
+        if type(table[j-1][k]) == int and table[j][k]==table[j-1][k]-5:
+
             aA=["-"]+alignA
             aB=[table[j][0]]+alignB
             j1=j-1
@@ -63,19 +54,18 @@ def align(ali):
             new.append(ns)
 
     def align4():
-        if type(table[j][k-1]) == int and table[j][k]==table[j][k-1]-1:
+        if type(table[j][k-1]) == int and table[j][k]==table[j][k-1]-5:
+
             aA=[table[0][k]]+alignA
             aB=["-"]+alignB
             j1=j
             k1=k-1
             ns=[j1,k1,[aA,aB]]
             new.append(ns)
- 
 
     for i in ali:
         j,k,alignA,alignB = i[0],i[1],i[2][0],i[2][1]
         align1()
-        align2()
         align3()
         align4()
     if check(new) == True:
