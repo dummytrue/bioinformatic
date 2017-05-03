@@ -1,0 +1,77 @@
+
+
+
+top = "TGTTACGG"
+left = "GGTTGACTA"
+table=[[0 for j in range(10)] for i in range(11)]
+table[0][2:] = top
+
+for i in range(9):
+     table[i+2][0]=left[i]
+
+simdict={"AA":3,"GG":3,"CC":3,"TT":3,"GA":-3,"CA":-3,"TA":-3,"CG":-3,"TG":-3,"TC":-3,"AG":-3,"AC":-3,"AT":-3,"GC":-3,"GT":-3,"CT":-3}
+
+for i in range(9):
+     for j in range(8):
+         topv=table[i+2-1][j+2]-2
+         leftv=table[i+2][j+2-1]-2
+         diag=table[i+2-1][j+2-1]+simdict.get(table[0][j+2]+table[i+2][0])
+         table[i+2][j+2]=max(topv,leftv,diag,0)
+
+table[0][0],table[1][0],table[0][1]="i","i","i"
+
+m=[0,0,0]
+for i in range(10):
+    for j in range(9):
+        if table[i+1][j+1]>m[0]:
+            m[0]=table[i+1][j+1]
+            m[1],m[2]=i+1,j+1
+
+ali=[[m[1],m[2],[[],[]]]]
+
+def align(ali):
+    new=[]
+    def check(ali):
+        for i in ali:
+            if table[i[0]][i[1]] != 0:
+                return True
+                break
+
+    def align1():
+        if type(table[j-1][k-1]) == int and table[j][k]==table[j-1][k-1]+simdict.get(table[0][k]+table[j][0]):
+            aA=[table[0][k]]+alignA
+            aB=[table[j][0]]+alignB
+            j1=j-1
+            k1=k-1
+            ns=[j1,k1,[aA,aB]]
+            new.append(ns)
+
+    def align3():
+        if type(table[j-1][k]) == int and table[j][k]==table[j-1][k]-2:
+            aA=["-"]+alignA
+            aB=[table[j][0]]+alignB
+            j1=j-1
+            k1=k
+            ns=[j1,k1,[aA,aB]]
+            new.append(ns)
+
+    def align4():
+        if type(table[j][k-1]) == int and table[j][k]==table[j][k-1]-2:
+            aA=[table[0][k]]+alignA
+            aB=["-"]+alignB
+            j1=j
+            k1=k-1
+            ns=[j1,k1,[aA,aB]]
+            new.append(ns)
+
+    for i in ali:
+        j,k,alignA,alignB = i[0],i[1],i[2][0],i[2][1]
+        align1()
+        align3()
+        align4()
+    if check(new) == True:
+        return align(new)
+    else:
+        return new
+
+align(ali)
