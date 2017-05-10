@@ -27,7 +27,9 @@ for i in range(10):
             m[0]=table[i+1][j+1]
             m[1],m[2]=i+1,j+1
 
-ali=[[m[1],m[2],[[],[]]]]
+top_left=[i for i in top[m[1]-2:]]
+left_left=[i for i in left[m[2]-2:]]
+ali=[[m[1],m[2],[top_left,left_left,[]]]]
 
 def align(ali):
     new=[]
@@ -43,7 +45,11 @@ def align(ali):
             aB=[table[j][0]]+alignB
             j1=j-1
             k1=k-1
-            ns=[j1,k1,[aA,aB]]
+            l1=line+[""]
+            if table[0][k]==table[j][0]:
+                l1=line+["|"]
+
+            ns=[j1,k1,[aA,aB,l1]]
             new.append(ns)
 
     def align3():
@@ -52,7 +58,8 @@ def align(ali):
             aB=[table[j][0]]+alignB
             j1=j-1
             k1=k
-            ns=[j1,k1,[aA,aB]]
+            l1=line+[""]
+            ns=[j1,k1,[aA,aB,l1]]
             new.append(ns)
 
     def align4():
@@ -61,11 +68,12 @@ def align(ali):
             aB=["-"]+alignB
             j1=j
             k1=k-1
-            ns=[j1,k1,[aA,aB]]
+            l1=line+[""]
+            ns=[j1,k1,[aA,aB,l1]]
             new.append(ns)
 
     for i in ali:
-        j,k,alignA,alignB = i[0],i[1],i[2][0],i[2][1]
+        j,k,alignA,alignB,line = i[0],i[1],i[2][0],i[2][1],i[2][2]
         align1()
         align3()
         align4()
